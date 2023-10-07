@@ -1,3 +1,11 @@
+/*
+ * @Author: jaylu11 lushuyuan1@hotmail.com
+ * @Date: 2023-10-05 14:11:24
+ * @LastEditors: jaylu11 lushuyuan1@hotmail.com
+ * @LastEditTime: 2023-10-07 20:40:24
+ * @FilePath: \free code\hardhat.config.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 require("@nomicfoundation/hardhat-toolbox");
 require("hardhat-deploy");
 require("dotenv").config();
@@ -33,7 +41,7 @@ module.exports = {
     },
   },
   gasReporter: {
-    enabled: false,
+    enabled: true,
     outputFile: "gas-report.txt",
     noColors: true,
     currency: "USD",
