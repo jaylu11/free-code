@@ -2,7 +2,7 @@
  * @Author: jaylu11 lushuyuan1@hotmail.com
  * @Date: 2023-10-05 14:11:24
  * @LastEditors: jaylu11 lushuyuan1@hotmail.com
- * @LastEditTime: 2023-10-07 20:40:24
+ * @LastEditTime: 2023-10-07 22:05:13
  * @FilePath: \free code\hardhat.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -30,6 +30,11 @@ module.exports = {
       accounts: [PRIVATE_KEY],
       chainId: 11155111,
       blockConfirmations: 6,
+    },
+    ganache: {
+      url: "http://127.0.0.1:9999",
+      accounts: [process.env.GANACHE_KEY],
+      chainId: 1337,
     },
   },
   etherscan: {

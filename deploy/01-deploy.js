@@ -1,4 +1,4 @@
-const { deployments, getNamedAccounts, network } = require("hardhat");
+const { deployments, getNamedAccounts, network, ethers } = require("hardhat");
 const { developmentChains } = require("../helper-hardhat-config");
 const verify = require("../utils/verify");
 
@@ -10,12 +10,14 @@ module.exports = async () => {
   const zombieFactory = await deploy("ZombieFactory", {
     from: deployer,
     log: true,
-    //waitConfirmations: 5,
+    waitConfirmations: network.config.blockConfirmations || 1,
   });
+
   //await deploy("Ownable", { from: deployer, log: true });
   if (
     !developmentChains.includes(network.name) &&
-    process.env.ETHERSCAN_API_KEY
+    process.env.ETHERSCAN_API_KEY &&
+    network.name !== "ganache"
   ) {
     await verify(zombieFactory.address, []);
   }
