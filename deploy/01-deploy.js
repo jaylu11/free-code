@@ -12,6 +12,11 @@ module.exports = async () => {
     log: true,
     waitConfirmations: network.config.blockConfirmations || 1,
   });
+  const zombieFeeding = await deploy("ZombieFeeding", {
+    from: deployer,
+    log: true,
+    waitConfirmations: network.config.blockConfirmations || 1,
+  });
 
   //await deploy("Ownable", { from: deployer, log: true });
   if (
