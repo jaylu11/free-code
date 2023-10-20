@@ -17,7 +17,11 @@ module.exports = async () => {
     log: true,
     waitConfirmations: network.config.blockConfirmations || 1,
   });
-
+  const kitty = await deploy("Kitty", {
+    from: deployer,
+    log: true,
+    waitConfirmations: network.config.blockConfirmations || 1,
+  });
   //await deploy("Ownable", { from: deployer, log: true });
   if (
     !developmentChains.includes(network.name) &&

@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2023-10-06 14:27:39
  * @LastEditors: jaylu11 lushuyuan1@hotmail.com
- * @LastEditTime: 2023-10-20 14:07:37
+ * @LastEditTime: 2023-10-17 15:05:24
  * @FilePath: \free code\test\unit\ZombieFactory.test.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -20,12 +20,22 @@ describe("ZombieFactory", async () => {
     deployer = await ethers.getSigner(deployer); //same as connect
     const contracts = await deployments.fixture(["all"]);
     zombieFactory = await ethers.getContract("ZombieFactory", deployer);
-    zombieFeeding = await ethers.getContract("ZombieFeeing", deployer);
     //zombieFactory = contracts["ZombieFactory"];
   });
 
   describe("setNmae", async () => {
-    it("set right name", async () => {});
+    it("set right name", async () => {
+      //get an account to sign transaction
+      const accounts = await ethers.getSigners();
+      const connectZombie = await zombieFactory.connect(accounts[0]);
+      //call functions
+      const value = await connectZombie.setName(name);
+      const response = await zombieFactory.getName();
+      assert.equal(response, "lu");
+      await zombieFactory.fund({ value: sendValue });
+      const transaction = await zombieFactory.setName(name);
+      await transaction.wait(1);
+    });
   });
   describe("Zombie", async () => {
     it("if new", async () => {

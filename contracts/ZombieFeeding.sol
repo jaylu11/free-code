@@ -24,7 +24,7 @@ interface KittyInterface {
 }
 
 contract ZombieFeeding is ZombieFactory {
-    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
+    address ckAddress = 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9;
     KittyInterface kittyContract = KittyInterface(ckAddress);
 
     function feedAndMultiply(
