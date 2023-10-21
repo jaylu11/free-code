@@ -24,15 +24,19 @@ interface KittyInterface {
 }
 
 contract ZombieFeeding is ZombieFactory {
-    address ckAddress = 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9;
-    KittyInterface kittyContract = KittyInterface(ckAddress);
+    //address ckAddress = 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9;
+    KittyInterface kittyContract;
+
+    constructor(address kittyAddress) {
+        kittyContract = KittyInterface(kittyAddress);
+    }
 
     function feedAndMultiply(
         uint _zombieId,
         uint _targetDna,
         string memory _species
     ) public {
-        require(zombieToOwner[_zombieId] == msg.sender);
+        require(msg.sender == zombieToOwner[_zombieId]);
         Zombie storage myZombie = zombies[_zombieId];
         _targetDna = _targetDna % dnaModulus;
         uint newDna = (myZombie.dna + _targetDna) / 2;
@@ -49,5 +53,9 @@ contract ZombieFeeding is ZombieFactory {
         uint kittyDna;
         (, , , , , , , , , kittyDna) = kittyContract.getKitty(_kittyId);
         feedAndMultiply(_zombieId, kittyDna, "kitty");
+    }
+
+    function getKittyAddress() public view returns (KittyInterface) {
+        return kittyContract;
     }
 }

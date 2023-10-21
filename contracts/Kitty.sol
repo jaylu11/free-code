@@ -20,9 +20,11 @@ contract Kitty {
 
     constructor() {
         uint g;
+        uint fixedLength;
         for (uint i = 0; i < 10; i++) {
             g = block.timestamp;
             uint dna = uint(keccak256(abi.encode(g)));
+            fixedLength = dna % dnaModulus;
             kittys.push(
                 Kittys(
                     true,
@@ -34,10 +36,14 @@ contract Kitty {
                     99,
                     99,
                     99,
-                    dna - (dna % dnaModulus) + 99
+                    fixedLength - (fixedLength % 100) + 99
                 )
             );
         }
+    }
+
+    function kittysLength() public view returns (uint) {
+        return kittys.length;
     }
 
     function getKitty(
