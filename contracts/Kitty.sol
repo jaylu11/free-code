@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 contract Kitty {
     uint dnaDigits = 16;
-    uint dnaModulus = 10 ** dnaDigits;
+    uint public dnaModulus = 10 ** dnaDigits;
     struct Kittys {
         bool isGestating;
         bool isReady;
@@ -19,27 +19,18 @@ contract Kitty {
     Kittys[] public kittys;
 
     constructor() {
-        uint g;
-        uint fixedLength;
-        for (uint i = 0; i < 10; i++) {
-            g = block.timestamp;
-            uint dna = uint(keccak256(abi.encode(g)));
-            fixedLength = dna % dnaModulus;
-            kittys.push(
-                Kittys(
-                    true,
-                    true,
-                    99,
-                    99,
-                    99,
-                    99,
-                    99,
-                    99,
-                    99,
-                    fixedLength - (fixedLength % 100) + 99
-                )
-            );
-        }
+        // uint g;
+        // for (uint i = 0; i < 10; i++) {
+        //     // g = block.timestamp;
+        //     // uint dna = uint(keccak256(abi.encode(g)));
+        //     // fixedLength = dna % dnaModulus;
+        //     for (uint j = 1; j < dnaDigits; j++) {
+
+        //     }
+        kittys.push(
+            Kittys(true, true, 99, 99, 99, 99, 99, 99, 99, 1000000000000099)
+        );
+        //     }
     }
 
     function kittysLength() public view returns (uint) {

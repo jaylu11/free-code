@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2023-10-06 14:27:39
  * @LastEditors: jaylu11 lushuyuan1@hotmail.com
- * @LastEditTime: 2023-10-21 15:12:54
+ * @LastEditTime: 2023-10-22 02:13:09
  * @FilePath: \free code\test\unit\ZombieFactory.test.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -22,6 +22,7 @@ describe("ZombieFactory", async () => {
     zombieFactory = await ethers.getContract("ZombieFactory", deployer);
     zombieFeeding = await ethers.getContract("ZombieFeeding", deployer);
     kitty = await ethers.getContract("Kitty", deployer);
+
     //zombieFactory = contracts["ZombieFactory"];
   });
 
@@ -33,6 +34,7 @@ describe("ZombieFactory", async () => {
         //e = kittys.length;
         //console.log(String(d.genes));
         assert.equal(String(d.genes) % 100, String(99));
+        assert.equal(String(d.genes) > String(kitty.dnaModulus()), true);
       }
     });
   });
@@ -59,10 +61,14 @@ describe("ZombieFactory", async () => {
       const response = await zombieFeeding.getKittyAddress();
       assert.equal(response, kitty.target);
     });
+
     it("common feed", async () => {
       let zombieId;
       let d = await kitty.kittys(0);
+      const accounts = await ethers.getSigners();
       await zombieFactory.createRandomZombie(name);
+      const account1 = await zombieFactory.connect(accounts[1]);
+      await account1.createRandomZombie(name);
       console.log(await zombieFactory.zombieToOwner(0));
       console.log(deployer.address);
       console.log(await zombieFactory.zombiesLength());
@@ -75,7 +81,7 @@ describe("ZombieFactory", async () => {
       }
       console.log(zombieId);
       await zombieFeeding.feedAndMultiply(
-        zombieId,
+        Number(1),
         BigInt(d.genes),
         String("zombie")
       );
